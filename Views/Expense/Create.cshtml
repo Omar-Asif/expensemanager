@@ -1,0 +1,18 @@
+@model expensemanager.ViewModels.ExpenseFormViewModel
+@{
+    ViewData["Title"] = "Add Expense";
+}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="h4">Add Expense</h2>
+    <a asp-action="Index" class="btn btn-outline-secondary rounded-pill">Back</a>
+</div>
+<form method="post" class="card shadow-sm rounded-4 p-4">
+    @Html.AntiForgeryToken()
+    @await Html.PartialAsync("_ExpenseForm", Model)
+    <div class="mt-4 d-flex justify-content-end gap-2">
+        <button type="submit" class="btn btn-primary rounded-pill">Save</button>
+    </div>
+</form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

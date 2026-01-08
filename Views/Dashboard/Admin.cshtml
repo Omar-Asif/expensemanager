@@ -1,0 +1,38 @@
+@model expensemanager.ViewModels.AdminDashboardViewModel
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+<div class="row g-3">
+    <div class="col-12 col-md-3">
+        <div class="card shadow-sm rounded-4">
+            <div class="card-body">
+                <div class="text-body-secondary">Total Users</div>
+                <div class="display-6">@Model.TotalUsers</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-3">
+        <div class="card shadow-sm rounded-4">
+            <div class="card-body">
+                <div class="text-body-secondary">Total Expenses</div>
+                <div class="display-6">@Model.TotalExpenses</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-3">
+        <div class="card shadow-sm rounded-4">
+            <div class="card-body">
+                <div class="text-body-secondary">Total Amount</div>
+                <div class="display-6">@Model.TotalExpenseAmount.ToString("C")</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-3">
+        <div class="card shadow-sm rounded-4">
+            <div class="card-body">
+                <div class="text-body-secondary">Categories</div>
+                <div class="display-6">@Model.CategoriesCount</div>
+            </div>
+        </div>
+    </div>
+</div>

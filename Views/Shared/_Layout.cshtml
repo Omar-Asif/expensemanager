@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Expense Manager</title>
+    <script>
+        // Apply saved theme before CSS loads to avoid FOUC
+        (function () {
+            try {
+                var theme = localStorage.getItem('theme') || 'light';
+                document.documentElement.setAttribute('data-bs-theme', theme);
+            } catch { }
+        })();
+    </script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/expensemanager.styles.css" asp-append-version="true" />
+</head>
+<body class="bg-body">
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm bg-body-tertiary border-bottom shadow-sm">
+            <div class="container">
+                <a class="navbar-brand fw-semibold" asp-area="" asp-controller="Home" asp-action="Index">Expense Manager</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="mainNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item me-2">
+                            <a class="btn btn-outline-secondary rounded-pill nav-btn" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        @{
+                            var uid = Context.Session.GetInt32("APP_USER_ID");
+                            var role = Context.Session.GetString("APP_USER_ROLE");
+                        }
+                        @if (uid is not null)
+                        {
+                            <li class="nav-item me-2">
+                                <a class="btn btn-outline-secondary rounded-pill nav-btn" asp-controller="Dashboard" asp-action="@(string.Equals(role, "Admin", StringComparison.OrdinalIgnoreCase) ? "Admin" : "User")">Dashboard</a>
+                            </li>
+                            <li class="nav-item me-2">
+                                <a class="btn btn-outline-secondary rounded-pill nav-btn" asp-controller="Income" asp-action="Index">Income</a>
+                            </li>
+                            <li class="nav-item me-2">
+                                <a class="btn btn-outline-secondary rounded-pill nav-btn" asp-controller="Expense" asp-action="Index">Expenses</a>
+                            </li>
+                            <li class="nav-item me-2">
+                                <a class="btn btn-outline-secondary rounded-pill nav-btn" asp-controller="Budget" asp-action="Index">Budget</a>
+                            </li>
+                            <li class="nav-item me-2">
+                                <a class="btn btn-outline-secondary rounded-pill nav-btn" asp-controller="Analytics" asp-action="Index">Analytics</a>
+                            </li>
+                            <li class="nav-item me-2">
+                                <a class="btn btn-outline-secondary rounded-pill nav-btn" asp-controller="Report" asp-action="MySummary">Reports</a>
+                            </li>
+                        }
+                    </ul>
+                    <div class="d-flex align-items-center gap-2">
+                        <button id="themeToggle" type="button" class="btn btn-outline-secondary rounded-pill" aria-label="Toggle dark mode">
+                            <span class="theme-label">Theme</span>
+                        </button>
+                        @{
+                            var name = Context.Session.GetString("APP_USER_NAME");
+                        }
+                        @if (uid is not null)
+                        {
+                            <span class="text-body-secondary small me-2">Hello, @name</span>
+                            <form asp-controller="Auth" asp-action="Logout" method="post" class="m-0">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-primary rounded-pill">Logout</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <a class="btn btn-primary rounded-pill" asp-controller="Auth" asp-action="Login">Login</a>
+                            <a class="btn btn-outline-primary rounded-pill" asp-controller="Auth" asp-action="Register">Register</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container my-4">
+        <main role="main" class="pb-5 app-surface">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="footer fixed-bottom border-top bg-body-tertiary py-2 shadow-sm">
+        <div class="container text-center small text-body-secondary">
+            Developed by S.M. Shah Omar Asif, CSE, IUBAT © 2026. All rights reserved.
+        </div>
+    </footer>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

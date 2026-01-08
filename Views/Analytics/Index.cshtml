@@ -1,0 +1,40 @@
+@{
+    ViewData["Title"] = "Analytics";
+}
+<h2 class="h4 mb-3">Analytics</h2>
+<div class="row g-3">
+    <div class="col-12 col-md-6">
+        <div class="card shadow-sm rounded-4 p-3">
+            <div class="text-body-secondary small mb-2">Expense Breakdown</div>
+            <canvas id="pieChart"></canvas>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="card shadow-sm rounded-4 p-3">
+            <div class="text-body-secondary small mb-2">Monthly Spending</div>
+            <canvas id="barChart"></canvas>
+        </div>
+    </div>
+</div>
+@section Scripts {
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+(async function(){
+  const pieResp = await fetch('@Url.Action("ExpenseBreakdown")');
+  const pieData = await pieResp.json();
+  const pieCtx = document.getElementById('pieChart');
+  new Chart(pieCtx, {
+    type: 'pie',
+    data: { labels: pieData.map(x=>x.label), datasets: [{ data: pieData.map(x=>x.value) }] }
+  });
+
+  const barResp = await fetch('@Url.Action("MonthlySpending")');
+  const barData = await barResp.json();
+  const barCtx = document.getElementById('barChart');
+  new Chart(barCtx, {
+    type: 'bar',
+    data: { labels: barData.map(x=>x.label), datasets: [{ label: 'Spent', data: barData.map(x=>x.value) }] }
+  });
+})();
+</script>
+}
