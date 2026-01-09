@@ -86,3 +86,60 @@ body {
   --gh-border: 1px solid rgba(240,246,252,0.1);
   --gh-shadow: 0 0 0 rgba(0,0,0,0);
 }
+
+/* Dark Fintech theme extensions */
+:root {
+  --fin-bg: #0f1115;
+  --fin-surface: #151922;
+  --fin-accent: #6ea8fe; /* bootstrap primary light */
+  --fin-text: #e6e8ee;
+  --fin-muted: #9aa0ab;
+  --fin-border: 1px solid rgba(255,255,255,0.08);
+  --fin-radius: 14px;
+}
+
+[data-bs-theme="dark"] body,
+body.fin-dark {
+  background-color: var(--fin-bg) !important;
+  color: var(--fin-text);
+}
+
+.fin-surface {
+  background: var(--fin-surface);
+  border: var(--fin-border);
+  border-radius: var(--fin-radius);
+  box-shadow: 0 8px 24px rgba(0,0,0,.35);
+}
+
+.fin-metric {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 1rem 1.25rem;
+}
+.fin-metric .icon {
+  width: 44px; height: 44px; display:flex; align-items:center; justify-content:center;
+  border-radius: 50%; background: rgba(110,168,254,.15); color: var(--fin-accent);
+}
+.fin-metric .value { font-size: 1.6rem; font-weight: 600; }
+.fin-metric .label { color: var(--fin-muted); font-size: .9rem; }
+
+/* Sidebar */
+.fin-sidebar {
+  min-height: 100vh;
+  width: 260px;
+  position: sticky; top: 0; align-self: start;
+}
+.fin-sidebar .nav-link { color: var(--fin-text); border-radius: 9999px; }
+.fin-sidebar .nav-link:hover { background: rgba(255,255,255,.06); }
+.fin-sidebar .nav-link.active { background: rgba(110,168,254,.18); color: #fff; }
+
+/* Top action bar */
+.fin-topbar { display:flex; gap:.5rem; align-items:center; }
+.fin-search { max-width: 360px; }
+
+/* Cards and tables */
+.app-surface { background: var(--fin-surface); border: var(--fin-border); border-radius: var(--fin-radius); }
+.table { color: var(--fin-text); }
+.table thead { color: var(--fin-text); }
+
+/* Footer */
+.footer { background: var(--fin-surface); border-top: var(--fin-border); }
